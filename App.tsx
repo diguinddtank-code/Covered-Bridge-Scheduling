@@ -85,7 +85,7 @@ const App: React.FC = () => {
     };
 
     try {
-      const response = await fetch('https://n8n.infra-remakingautomacoes.cloud/webhook-test/idclinic', {
+      const response = await fetch('https://webhook.infra-remakingautomacoes.cloud/webhook/idclinic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,6 +95,9 @@ const App: React.FC = () => {
 
       if (response.ok) {
         setFormStatus('success');
+        if (typeof (window as any).fbq === 'function') {
+          (window as any).fbq('track', 'Lead');
+        }
       } else {
         console.error('Failed to submit form:', response.statusText);
         setFormStatus('idle');
@@ -183,10 +186,10 @@ const App: React.FC = () => {
             </nav>
 
             {/* Language Selector */}
-            <div className={`flex items-center space-x-1.5 md:space-x-2`}>
-              <button onClick={() => setLang('en')} className={`text-base md:text-lg transition-all ${lang === 'en' ? 'scale-110 opacity-100 drop-shadow-md' : 'opacity-50 hover:opacity-100 grayscale-[50%]'}`} title="English">🇺🇸</button>
-              <button onClick={() => setLang('es')} className={`text-base md:text-lg transition-all ${lang === 'es' ? 'scale-110 opacity-100 drop-shadow-md' : 'opacity-50 hover:opacity-100 grayscale-[50%]'}`} title="Español">🇪🇸</button>
-              <button onClick={() => setLang('pt')} className={`text-base md:text-lg transition-all ${lang === 'pt' ? 'scale-110 opacity-100 drop-shadow-md' : 'opacity-50 hover:opacity-100 grayscale-[50%]'}`} title="Português">🇧🇷</button>
+            <div className={`flex items-center space-x-2 md:space-x-3 bg-black/5 backdrop-blur-sm px-3 py-1.5 rounded-2xl border border-gray-200/20`}>
+              <button onClick={() => setLang('en')} className={`text-2xl md:text-3xl transition-all duration-300 ${lang === 'en' ? 'scale-125 opacity-100 drop-shadow-md -translate-y-0.5' : 'opacity-40 hover:opacity-100 hover:scale-110 grayscale-[60%]'}`} title="English">🇺🇸</button>
+              <button onClick={() => setLang('es')} className={`text-2xl md:text-3xl transition-all duration-300 ${lang === 'es' ? 'scale-125 opacity-100 drop-shadow-md -translate-y-0.5' : 'opacity-40 hover:opacity-100 hover:scale-110 grayscale-[60%]'}`} title="Español">🇪🇸</button>
+              <button onClick={() => setLang('pt')} className={`text-2xl md:text-3xl transition-all duration-300 ${lang === 'pt' ? 'scale-125 opacity-100 drop-shadow-md -translate-y-0.5' : 'opacity-40 hover:opacity-100 hover:scale-110 grayscale-[60%]'}`} title="Português">🇧🇷</button>
             </div>
           </div>
         </div>
@@ -383,6 +386,7 @@ const App: React.FC = () => {
                       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {/* Name */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.fullName}</label>
                           <input 
                             type="text" 
                             required
@@ -395,6 +399,7 @@ const App: React.FC = () => {
 
                         {/* BirthDate */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.birthDate}</label>
                           <input 
                             type="date" 
                             required
@@ -407,6 +412,7 @@ const App: React.FC = () => {
 
                       {/* Email */}
                       <motion.div variants={itemVariants} className="w-full">
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.email}</label>
                         <input 
                           type="email" 
                           required
@@ -420,6 +426,7 @@ const App: React.FC = () => {
                       <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 w-full">
                         {/* City */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.city}</label>
                           <input 
                             type="text" 
                             required
@@ -432,6 +439,7 @@ const App: React.FC = () => {
 
                         {/* Zip */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.zip}</label>
                           <input 
                             type="text" 
                             required
@@ -466,19 +474,32 @@ const App: React.FC = () => {
 
                       {/* How did you hear */}
                       <motion.div variants={itemVariants} className="w-full">
-                        <input 
-                          type="text" 
-                          required
-                          value={heardAbout}
-                          onChange={(e) => setHeardAbout(e.target.value)}
-                          placeholder={t.form.heardAbout}
-                          className="w-full bg-gray-50 px-4 py-3 rounded-xl font-semibold text-gray-900 border border-gray-200 focus:bg-white focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all outline-none shadow-[0_0_0_0px_#CC0000] focus:shadow-[0_0_0_2px_#CC0000]"
-                        />
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.heardAbout}</label>
+                        <div className="relative">
+                          <select 
+                            required
+                            value={heardAbout}
+                            onChange={(e) => setHeardAbout(e.target.value)}
+                            className="w-full bg-gray-50 px-4 py-3 rounded-xl font-semibold text-gray-900 border border-gray-200 focus:bg-white focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all outline-none shadow-[0_0_0_0px_#CC0000] focus:shadow-[0_0_0_2px_#CC0000] appearance-none pr-10"
+                          >
+                            <option value="" disabled>{t.form.heardAbout}</option>
+                            <option value="Instagram">{t.form.heardAboutOptions.instagram}</option>
+                            <option value="TikTok">{t.form.heardAboutOptions.tiktok}</option>
+                            <option value="Facebook">{t.form.heardAboutOptions.facebook}</option>
+                            <option value="Friend">{t.form.heardAboutOptions.friend}</option>
+                            <option value="Coach">{t.form.heardAboutOptions.coach}</option>
+                            <option value="Other">{t.form.heardAboutOptions.other}</option>
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                            <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                          </div>
+                        </div>
                       </motion.div>
 
                       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         {/* Current Team */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.currentTeam}</label>
                           <input 
                             type="text" 
                             value={currentTeam}
@@ -490,6 +511,7 @@ const App: React.FC = () => {
 
                         {/* Highest Level */}
                         <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.highestLevel}</label>
                           <input 
                             type="text" 
                             required
