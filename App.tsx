@@ -273,9 +273,6 @@ const App: React.FC = () => {
                 <p className="text-[10px] md:text-[11px] text-white/40 tracking-[0.15em] uppercase font-bold mb-1">
                   {t.hero.academyDivision}
                 </p>
-                <p className="text-gray-300 font-medium text-base md:text-lg italic">
-                  {t.hero.evaluatedBy}
-                </p>
               </div>
             </motion.div>
 
