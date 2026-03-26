@@ -19,6 +19,7 @@ const App: React.FC = () => {
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
   const [zip, setZip] = useState('');
   const [position, setPosition] = useState('');
@@ -66,7 +67,7 @@ const App: React.FC = () => {
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consent || !location || !name || !birthDate || !email || !city || !zip || !position || !heardAbout || !highestLevel) return;
+    if (!consent || !location || !name || !birthDate || !email || !phone || !city || !zip || !position || !heardAbout || !highestLevel) return;
     
     setFormStatus('submitting');
     
@@ -76,6 +77,7 @@ const App: React.FC = () => {
       name,
       birthDate,
       email,
+      phone,
       city,
       zip,
       position,
@@ -407,17 +409,30 @@ const App: React.FC = () => {
                         </div>
                       </motion.div>
 
-                      {/* Email */}
-                      <motion.div variants={itemVariants} className="w-full">
-                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.email}</label>
-                        <input 
-                          type="email" 
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder={t.form.email}
-                          className="w-full bg-gray-50 px-4 py-3 rounded-xl font-semibold text-gray-900 border border-gray-200 focus:bg-white focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all outline-none shadow-[0_0_0_0px_#CC0000] focus:shadow-[0_0_0_2px_#CC0000]"
-                        />
+                      {/* Email & Phone */}
+                      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.email}</label>
+                          <input 
+                            type="email" 
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder={t.form.email}
+                            className="w-full bg-gray-50 px-4 py-3 rounded-xl font-semibold text-gray-900 border border-gray-200 focus:bg-white focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all outline-none shadow-[0_0_0_0px_#CC0000] focus:shadow-[0_0_0_2px_#CC0000]"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block ml-1">{t.form.phone}</label>
+                          <input 
+                            type="tel" 
+                            required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder={t.form.phone}
+                            className="w-full bg-gray-50 px-4 py-3 rounded-xl font-semibold text-gray-900 border border-gray-200 focus:bg-white focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition-all outline-none shadow-[0_0_0_0px_#CC0000] focus:shadow-[0_0_0_2px_#CC0000]"
+                          />
+                        </div>
                       </motion.div>
 
                       <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 w-full">
